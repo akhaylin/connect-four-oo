@@ -7,7 +7,7 @@
  * board fills (tie)
  */
 class Game {
-  constructor(width, height) {
+  constructor(height, width) {
     this.width = width;
     this.height = height;
     this.currPlayer = 1;
@@ -29,8 +29,9 @@ class Game {
   /** makeHtmlBoard: make HTML table and row of column tops. */
 
   makeHtmlBoard() {
-    this.board = document.getElementById('board');
-
+     const board = document.getElementById('board');
+    // clear board
+    board.innerHTML = '';
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement('tr');
     top.setAttribute('id', 'column-top');
@@ -38,7 +39,7 @@ class Game {
     for (let x = 0; x < this.width; x++) {
       const headCell = document.createElement('td');
       headCell.setAttribute('id', x);
-      headCell.addEventListener('click', this.handleClick);
+      headCell.addEventListener('click', this.handleClick.bind(this));
       top.append(headCell);
     }
 
@@ -142,7 +143,7 @@ class Game {
         const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
         // find winner (only checking each win-possibility as needed)
-        if (this._win(horiz) || this._win(vert) || this._win(diagDR) || this._win(diagDL)) {
+        if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
           return true;
         }
       }
