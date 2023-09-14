@@ -7,6 +7,7 @@
  * board fills (tie)
  */
 class Game {
+  // add some default parmas for height and width
   constructor(height, width) {
     this.width = width;
     this.height = height;
@@ -104,12 +105,12 @@ class Game {
 
     // check for win
     if (this.checkForWin()) {
-      return endGame(`Player ${this.currPlayer} won!`);
+      return this.endGame(`Player ${this.currPlayer} won!`);
     }
 
     // check for tie
     if (this.board.every(row => row.every(cell => cell))) {
-      return endGame('Tie!');
+      return this.endGame('Tie!');
     }
 
     // switch players
@@ -118,6 +119,7 @@ class Game {
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
   checkForWin() {
+    // const theRealThis = this; only if not arrow funct
     const _win = cells =>
       // Check four cells to see if they're all color of current player
       //  - cells: list of four (y, x) cells
