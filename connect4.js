@@ -8,16 +8,24 @@
  */
 class Game {
   // add some default parmas for height and width
-  constructor(height, width) {
+  constructor(height = 6, width = 7) {
     this.width = width;
     this.height = height;
     this.currPlayer = 1;
     this.board = [];
-
+    this.isGameOver = false;
     this.makeBoard();
     this.makeHtmlBoard();
-  }
 
+  }
+  /**starts game when button is clicked
+   *
+   */
+
+  startGame(){
+    console.log('in startGame')
+    return new Game()
+  }
   /** makeBoard: create in-JS board structure:
   *   board = array of rows, each row is array of cells  (board[y][x])
   */
@@ -90,6 +98,7 @@ class Game {
   /** handleClick: handle click of column top to play piece */
 
   handleClick(evt) {
+    if(!this.isGameOver){
     // get x from ID of clicked cell
     const x = +evt.target.id;
 
@@ -105,18 +114,22 @@ class Game {
 
     // check for win
     if (this.checkForWin()) {
+      this.isGameOver = true
       return this.endGame(`Player ${this.currPlayer} won!`);
     }
 
     // check for tie
     if (this.board.every(row => row.every(cell => cell))) {
+
       return this.endGame('Tie!');
     }
 
     // switch players
     this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+  }else{
+    alert('Game is over, click StartGame to restart')
   }
-
+}
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
   checkForWin() {
     // const theRealThis = this; only if not arrow funct
@@ -152,8 +165,16 @@ class Game {
     }
   }
 }
+/**starts game when button is clicked
+   *
+   */
 
-new Game(6, 7);
+
+const startButton = document.getElementById('start-game');
+startButton.addEventListener('click',() => new Game);
+
+
+//new Game(6, 7);
 
 
 
